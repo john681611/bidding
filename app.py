@@ -28,3 +28,11 @@ def proccess_bid(bid):
     item['bids'].append(bid_details)
     database.add(item['item'],item)
     return bid_details
+
+def process_commands(commands):
+    for command in commands:
+        if 'bid_amount' in command:
+            proccess_bid(command)
+        elif 'close_time' in command:
+            process_sell(command)
+

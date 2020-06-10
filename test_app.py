@@ -56,3 +56,17 @@ def test_process_bid_closed_sell():
     bid = {'bid_amount': 7.5, 'item': 'toaster_5', 'timestamp': 21, 'user_id': 8}
     assert app.proccess_bid(bid) == None
     assert database.get('toaster_5')['bids'] == []
+
+def test_process_commands():
+    commands = [
+        {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bids': []},
+        {'bid_amount': 7.5, 'item': 'toaster_1', 'timestamp': 12, 'user_id': 8},
+        {'bid_amount': 12.5, 'item': 'toaster_1', 'timestamp': 13, 'user_id': 5},
+        {'close_time': 20,'item': 'tv_1','reserve_price': 250.0,'timestamp': 15,'user_id': 8, 'bids': []}
+    ]
+    app.process_commands(commands)
+    assert database.get('toaster_1') == {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bids': [
+        {'user_id': 8, 'amount': 7.5, 'timestamp': 12},
+        {'user_id': 5, 'amount': 12.5, 'timestamp': 13}
+    ]}
+    assert database.get('tv_1') == {'close_time': 20,'item': 'tv_1','reserve_price': 250.0,'timestamp': 15,'user_id': 8, 'bids': []}

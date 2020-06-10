@@ -1,6 +1,10 @@
 import database
+import pytest
 
-# probably should clear DB before each test
+@pytest.fixture(autouse=True)
+def run_around_tests():
+    database.clear()
+    yield
 
 def test_add_item_to_db():
     txt = 'join the darkside'

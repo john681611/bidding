@@ -29,8 +29,8 @@ def parse_message(message):
             'item': parts[3],
             'bid_amount': float(parts[4]),
         }
-    else:
-        return {'timestamp': int(message)}
+
+    return {'timestamp': int(message)}
 
 
 def parse_file(location):

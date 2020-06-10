@@ -1,15 +1,19 @@
 import copy
-db = {}
+DB = {}
+
 
 def add(key, item):
-    db[key] = item
+    DB[key] = item
+
 
 def get(key):
-    return copy.deepcopy(db[key]) if key in db else None
+    return copy.deepcopy(DB[key]) if key in DB else None
+
 
 def clear():
-    global db
-    db = {}
+    global DB
+    DB = {}
 
-def get_closed(timestamp): 
-    return list(filter(lambda x: x['close_time'] == timestamp, db.values()))
+
+def get_closed(timestamp):
+    return list(filter(lambda x: x['close_time'] == timestamp, DB.values()))

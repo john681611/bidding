@@ -2,11 +2,14 @@ import app
 import database
 import pytest
 
+
 @pytest.fixture(autouse=True)
 def run_around_tests():
     database.clear()
 
     yield
+
+
 def test_E2E():
     with open('src/test/E2E_output.txt', 'w+') as text_file:
         text_file.write('')

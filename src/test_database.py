@@ -1,21 +1,25 @@
 import database
 import pytest
 
+
 @pytest.fixture(autouse=True)
 def run_around_tests():
     database.clear()
     yield
+
 
 def test_add_item_to_db():
     txt = 'join the darkside'
     database.add('key', txt)
     assert database.get('key') == txt
 
+
 def test_update_item_in_db():
     txt = 'NOOOOOOOOO? *sobs*'
     database.add('key2', 'Luke I am your Father')
     database.add('key2', txt)
     assert database.get('key2') == txt
+
 
 def test_local_modify_doest_affect_db():
     txt = {'txt': 'For GONDOOOOOR'}
@@ -26,18 +30,21 @@ def test_local_modify_doest_affect_db():
 
 
 def test_record_not_found():
-    assert database.get('key4') == None
+    assert database.get('key4') is None
+
 
 def test_clear_db():
     txt = '5G burns cookies!'
     database.add('key5', txt)
     database.clear()
-    assert database.get('key5') == None
+    assert database.get('key5') is None
+
 
 def test_get_closed():
     txt = {'close_time': 5}
     database.add('key3', txt)
     assert database.get_closed(5) == txt
+
 
 def test_get_closed():
     txt = {'close_time': 5}

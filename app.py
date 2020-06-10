@@ -13,6 +13,9 @@ def proccess_bid(bid):
     if item == None:
         print(f"No item {bid['item']} found for sale")
         return
+    elif item['timestamp'] > bid['timestamp']:
+        print(f"Bid too early opens at {item['timestamp']}")
+        return 
     elif item['close_time'] < bid['timestamp']:
         print(f"Bid too late closed at {item['close_time']}")
         return

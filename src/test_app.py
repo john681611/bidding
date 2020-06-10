@@ -145,7 +145,7 @@ def test_determin_winner_two_bids():
     }
 
 def test_process_commands():
-    with open('test_output.txt', 'w+') as text_file:
+    with open('src/test/test_output.txt', 'w+') as text_file:
         text_file.write('')
     commands = [
         {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bids': {}, 'bid_count': 0, 'highest_bid': 0, 'lowest_bid': math.inf},
@@ -155,13 +155,13 @@ def test_process_commands():
         {'bid_amount': 20, 'item': 'toaster_1', 'timestamp': 17, 'user_id': 8},
         {'timestamp': 20}
     ]
-    app.process_commands(commands, 'test_output.txt')
+    app.process_commands(commands, 'src/test/test_output.txt')
     assert database.get('toaster_1') == {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bid_count': 3, 'highest_bid': 20, 'lowest_bid': 7.5, 'bids': {
         5:{'user_id': 5, 'amount': 12.5, 'timestamp': 13},
         8:{'user_id': 8, 'amount': 20, 'timestamp': 17}
     }}
     assert database.get('tv_1') == {'close_time': 20,'item': 'tv_1','reserve_price': 250.0,'timestamp': 15,'user_id': 8, 'bid_count': 0, 'bids': {}, 'highest_bid': 0, 'lowest_bid': math.inf}
-    with open('test_output.txt', 'r') as text_file:
+    with open('src/test/test_output.txt', 'r') as text_file:
         contents = text_file.read()
         assert contents == '20|toaster_1|8|SOLD|12.50|3|20.00|7.50\n20|tv_1||UNSOLD|0.00|0|0.00|0.00\n'
 

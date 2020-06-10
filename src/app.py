@@ -43,7 +43,6 @@ def process_commands(commands, output):
         else:
             closed = database.get_closed(command['timestamp'])
             for sale in closed:
-
                 winner = winning_bid.determin_winner(sale)
                 write_file.write(
                     write_file.format_data(

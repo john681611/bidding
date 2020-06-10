@@ -1,5 +1,6 @@
 import database
 import operator
+import utils
 
 def process_sell(sell):
     database.add(sell['item'], sell)
@@ -26,6 +27,7 @@ def proccess_bid(bid):
         'timestamp': bid['timestamp']
     }
     item['bids'][bid['user_id']] = bid_details
+    item['bid_count'] += 1
     database.add(item['item'],item)
     return bid_details
 
@@ -35,13 +37,24 @@ def determin_winner(sale):
     'item': sale['item'],
     'user_id': '',
     'status': 'UNSOLD',
-    'price_paid': '0.00',
+    'price_paid': 0,
     'total_bid_count': 0,
-    'highest_bid': '0.00',
-    'lowest_bid': '0.00'
+    'highest_bid': 0,
+    'lowest_bid': 0
     }
-    if len(sale['bids']):
-        pass
+    if sale['bids'] == {}:
+        return winner
+    bids = sale['bids']
+    winner['total_bid_count'] = sale['bid_count']
+    winner['highest_bid'] = utils.get_highest_bid(bids)
+    winner['lowest_bid'] = utils.get_lowest_bid(bids)
+    winning_bid = utils.get_winning_bid(bids)
+    if winning_bid['price_paid'] > sale['reserve_price']:
+        winner['status'] = 'SOLD'
+        winner['user_id'] = winning_bid['user_id']
+        winner['price_paid'] =  winning_bid['price_paid'] if len(bids.values()) == 1 else sale['reserve_price']
+
+
     return winner
 
 def process_commands(commands):

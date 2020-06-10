@@ -13,7 +13,8 @@ def parse_message(message):
         'user_id': int(parts[1]),
         'item': parts[3],
         'reserve_price': float(parts[4]),
-        'close_time': int(parts[5])
+        'close_time': int(parts[5]),
+        'bids': []
         }
     elif "BID" in message:
         return {

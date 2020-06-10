@@ -33,3 +33,13 @@ def test_clear_db():
     database.add('key5', txt)
     database.clear()
     assert database.get('key5') == None
+
+def test_get_closed():
+    txt = {'close_time': 5}
+    database.add('key3', txt)
+    assert database.get_closed(5) == txt
+
+def test_get_closed():
+    txt = {'close_time': 5}
+    database.add('key3', txt)
+    assert database.get_closed(2) == []

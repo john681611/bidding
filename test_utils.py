@@ -29,11 +29,3 @@ def test_get_highest_bid():
     }
 
     assert utils.get_highest_bid(bids) == 12.5
-
-def test_get_lowest_bid():
-    bids = {
-        8:{'user_id': 8, 'amount': 7.5, 'timestamp': 12},
-        5:{'user_id': 5, 'amount': 12.5, 'timestamp': 13}
-    }
-
-    assert utils.get_lowest_bid(bids) == 7.5

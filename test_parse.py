@@ -1,5 +1,6 @@
 import parse_file
 import pytest
+import math
 
 
 #Reading
@@ -33,7 +34,9 @@ def test_parse_sell():
         'reserve_price': 10.00,
         'close_time': 20,
         'bids': {},
-        'bid_count': 0 
+        'bid_count': 0,
+        'lowest_bid': math.inf,
+        'highest_bid': 0,
     }
 
 def test_parse_bid():
@@ -45,20 +48,22 @@ def test_parse_bid():
         'bid_amount': 7.50,
     }
 
-def test_ignore_heart_beat():
+def test_parse_heart_beat():
     heart_beat = '20'
-    assert parse_file.parse_message(heart_beat) == None
+    assert parse_file.parse_message(heart_beat) == {'timestamp': 20}
 
 
 # parse everything
 def test_parse_file():
     assert parse_file.parse_file('input.txt') == [
-        {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bids': {}, 'bid_count': 0 },
+        {'close_time': 20,'item': 'toaster_1','reserve_price': 10.0,'timestamp': 10, 'user_id': 1, 'bids': {}, 'bid_count': 0, 'lowest_bid': math.inf,'highest_bid': 0, },
         {'bid_amount': 7.5, 'item': 'toaster_1', 'timestamp': 12, 'user_id': 8},
         {'bid_amount': 12.5, 'item': 'toaster_1', 'timestamp': 13, 'user_id': 5},
-        {'close_time': 20,'item': 'tv_1','reserve_price': 250.0,'timestamp': 15,'user_id': 8, 'bids': {}, 'bid_count': 0 },
+        {'close_time': 20,'item': 'tv_1','reserve_price': 250.0,'timestamp': 15,'user_id': 8, 'bids': {}, 'bid_count': 0, 'lowest_bid': math.inf,'highest_bid': 0, },
+        {'timestamp': 16},
         {'bid_amount': 20.0, 'item': 'toaster_1', 'timestamp': 17, 'user_id': 8},
-        {'bid_amount': 150.0, 'item': 'toaster_1', 'timestamp': 18, 'user_id': 1},
-        {'bid_amount': 200.0, 'item': 'toaster_1', 'timestamp': 19, 'user_id': 3},
-        {'bid_amount': 300.0, 'item': 'toaster_1', 'timestamp': 21, 'user_id': 3}
+        {'bid_amount': 150.0, 'item': 'tv_1', 'timestamp': 18, 'user_id': 1},
+        {'bid_amount': 200.0, 'item': 'tv_1', 'timestamp': 19, 'user_id': 3},
+        {'timestamp': 20},
+        {'bid_amount': 300.0, 'item': 'tv_1', 'timestamp': 21, 'user_id': 3}
         ]

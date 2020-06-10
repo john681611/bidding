@@ -10,3 +10,6 @@ def get(key):
 def clear():
     global db
     db = {}
+
+def get_closed(timestamp): 
+    return list(filter(lambda x: x['close_time'] == timestamp, db.values()))

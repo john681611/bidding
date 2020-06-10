@@ -1,6 +1,6 @@
 
-def write(data, location):
-    with open(location, 'w+') as text_file:
+def write(data, location):#
+    with open(location, 'a+') as text_file:
         text_file.write(data)
 
 def format_data(data): 
